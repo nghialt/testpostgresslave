@@ -15,18 +15,15 @@ func main() {
 		log.Panic("cannot init db", err)
 	}
 
-	active := false
+	count := 0
 	for {
 		start := time.Time{}
-		result := db.Model(&models.Customer{}).Where("id > 0").Update("active", active)
+		result := db.Model(&models.Customer{}).Where("id > 0").Update("count", count)
 		if result.Error != nil {
 			log.Panic("failed to update ", db.Error)
 		}
 		log.Println("finish update ", time.Time{}.Sub(start).Milliseconds())
-		if active {
-			active = false
-		} else {
-			active = true
-		}
+		count = (count + 1 ) % 10000
+		time.Sleep(500 * time.Millisecond)
 	}
 }

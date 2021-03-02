@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
 	"testpostgres/config"
 	"testpostgres/models"
+	"time"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -29,9 +31,20 @@ func main() {
 			log.Println("finish select all")
 			break
 		}
-		for _, customer := range customers {
-			fmt.Println(customer)
+		step := 0
+		for step < 5 {
+			step = time.Now().Nanosecond() / 1000 % 1000
+			fmt.Println("step ", step)
+			time.Sleep(124 * time.Millisecond)
 		}
-		offset += limit
+		for i := 0; i < len(customers); i += step {
+			customer := customers[i]
+			fmt.Println("customer ", customer.ID, " count ", customer.Count)
+		}
+		//for _, customer := range customers {
+		//	fmt.Println("customer ", customer.ID, " count ", customer.Count)
+		//}
+		//offset += limit
+		time.Sleep(500 * time.Millisecond)
 	}
 }

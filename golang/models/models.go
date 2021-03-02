@@ -6,4 +6,5 @@ type Customer struct {
 	gorm.Model
 	FirstName string
 	Active    bool
+	Count     int
 }
