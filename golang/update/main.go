@@ -18,6 +18,7 @@ func main() {
 	count := 0
 	for {
 		start := time.Time{}
+		//result := db.Model(&models.Customer{}).Where("id > 30000").Update("count", count)
 		result := db.Model(&models.Customer{}).Where("id > 0").Update("count", count)
 		if result.Error != nil {
 			log.Panic("failed to update ", db.Error)
